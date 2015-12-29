@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.edu.android_shitproject.R;
 import com.edu.android_shitproject.adpters.ShitPagerAdapter;
+import com.edu.android_shitproject.base.Constants;
 import com.edu.android_shitproject.entity.ShitEntity;
 
 import java.util.ArrayList;
@@ -25,6 +26,12 @@ public class ShitFragment extends Fragment {
     private ShitPagerAdapter adapter;
     private TabLayout tabLayout;
     private String[] items = {"专享", "视频", "纯文", "纯图", "精华"};
+    private String[] types = {Constants.SHIT_ITEM_EXCLUSIVE,
+            Constants.SHIT_ITEM_VIDEO,
+            Constants.SHIT_ITEM_TEXT,
+            Constants.SHIT_ITEM_IMAGE,
+            Constants.SHIT_ITEM_LATEST
+    };
 
 
     public ShitFragment() {
@@ -37,6 +44,7 @@ public class ShitFragment extends Fragment {
         for (int i = 0; i < items.length; i++) {
             ShitEntity shitEntity = new ShitEntity();
             shitEntity.setTitle(items[i]);
+            shitEntity.setType(types[i]);
             shitEntities.add(shitEntity);
         }
         Log.d(TAG, "onCreateView: "+shitEntities.toString());

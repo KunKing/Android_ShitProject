@@ -7,6 +7,7 @@ public class ShitEntity {
 
     private String id;
     private String title;
+    private String type;
 
     public ShitEntity() {
     }
@@ -32,11 +33,20 @@ public class ShitEntity {
         this.title = title;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "ShitEntity{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

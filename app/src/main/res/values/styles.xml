@@ -15,5 +15,19 @@
         <item name="colorPrimary">#FFB900</item>
     </style>
 
+    <style name="shit_item_text_style">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#D4D4D4</item>
+    </style>
+
+    <style name="shit_item_imageButton_style">
+        <item name="android:background">@null</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+
+
 
 </resources>

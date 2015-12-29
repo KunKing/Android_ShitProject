@@ -3,12 +3,16 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:paddingTop="5dp"
     tools:context=".fragments.ShitItemFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textItem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ListView
+
+        android:background="@android:color/white"
+        android:id="@+id/shitListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:dividerHeight="5dp"
+        />
 </LinearLayout>

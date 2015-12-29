@@ -24,7 +24,7 @@ public class ShitPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // 判断传入的 fragment 是哪一个 类型的
-        return ShitItemFragment.newInstance(shitEntities.get(position).getTitle());
+        return ShitItemFragment.newInstance(shitEntities.get(position).getType());
     }
 
     @Override

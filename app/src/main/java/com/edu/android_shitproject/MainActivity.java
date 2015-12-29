@@ -1,26 +1,20 @@
 package com.edu.android_shitproject;
 
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.edu.android_shitproject.adpters.CommonPagerAdapter;
-import com.edu.android_shitproject.adpters.ShitPagerAdapter;
-import com.edu.android_shitproject.entity.ShitEntity;
 import com.edu.android_shitproject.fragments.CircleShitFragment;
 import com.edu.android_shitproject.fragments.MessageFragment;
 import com.edu.android_shitproject.fragments.SelectFragment;
@@ -42,7 +36,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initActionIcon();
         init();
+    }
+
+    private void initActionIcon(){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setIcon(R.mipmap.ic_ab_qiushi);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle(R.string.app_name);
     }
 
     private void init() {
@@ -81,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -131,9 +132,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    // 切换 navigation item
     @Override
     public void onPageSelected(int position) {
-
         switch (position){
             case 0:
                 menu.setCheckedItem(R.id.itemShit);
@@ -147,10 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 3:
                 menu.setCheckedItem(R.id.itemMessage);
                 break;
-
         }
-
-
     }
 
     @Override

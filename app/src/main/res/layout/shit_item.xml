@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/user_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/tuotuo_avatar" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="用户名"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:drawableLeft="@mipmap/ic_rss_hot"
+            android:gravity="right"
+            android:text="type" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="见学长夫妇，说是最近俩人一直分床睡，已经好几个月了。我还以为是关系冷淡期，关切地问怎么回事。学长含羞一笑，说俩人共同爱好太多，三观太和，永远有聊不完的话题，
+            一不小心就唠到三四点，再愉快地啪啪一下，第二天根本没法起床上班...秀得我泪流满面…" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/shit_item_text_style"
+            android:text="好笑" />
+
+        <TextView
+            android:id="@+id/tvLaugh"
+            style="@style/shit_item_text_style"
+            android:text="11223" />
+
+        <TextView
+            style="@style/shit_item_text_style"
+            android:text=" · 评论" />
+
+        <TextView
+            android:id="@+id/tvComment"
+            style="@style/shit_item_text_style"
+            android:text="好笑" />
+
+        <TextView
+            style="@style/shit_item_text_style"
+            android:text=" · 分享" />
+
+        <TextView
+            android:id="@+id/tvShare"
+            style="@style/shit_item_text_style"
+            android:text="7" />
+
+        <TextView
+            style="@style/shit_item_text_style"
+            android:text=" · 再生" />
+
+        <TextView
+            android:id="@+id/tvBron"
+            style="@style/shit_item_text_style"
+            android:text="7" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ivSupport"
+            style="@style/shit_item_imageButton_style"
+            android:src="@drawable/shit_item_image_support" />
+
+        <ImageButton
+            android:id="@+id/ivUnsupport"
+
+            style="@style/shit_item_imageButton_style"
+            android:layout_toRightOf="@id/ivSupport"
+            android:src="@drawable/shit_item_image_unsupport" />
+
+        <ImageButton
+            android:id="@+id/ivComments"
+            style="@style/shit_item_imageButton_style"
+            android:layout_toRightOf="@id/ivUnsupport"
+            android:src="@drawable/shit_item_image_comments" />
+
+        <ImageButton
+            style="@style/shit_item_imageButton_style"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/shit_item_image_more" />
+    </RelativeLayout>
+
+</LinearLayout>

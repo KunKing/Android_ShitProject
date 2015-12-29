@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.edu.android_shitproject.R;
+import com.edu.android_shitproject.adpters.ShitFriendPagerAdapter;
 import com.edu.android_shitproject.adpters.ShitPagerAdapter;
+import com.edu.android_shitproject.base.Constants;
 import com.edu.android_shitproject.entity.ShitEntity;
 
 import java.util.ArrayList;
@@ -23,9 +25,10 @@ public class CircleShitFragment extends Fragment {
     private List<ShitEntity> shitEntities;
 
     private ViewPager viewPager;
-    private ShitPagerAdapter adapter;
+    private ShitFriendPagerAdapter adapter;
     private TabLayout tabLayout;
     private String[] items = {"隔壁", "已粉", "话题"};
+    private String[] types = {Constants.SHIT_ITEM_NEXT,Constants.SHIT_ITEM_WATCH,Constants.SHIT_ITEM_TOPIC};
 
 
 
@@ -38,6 +41,7 @@ public class CircleShitFragment extends Fragment {
         for (int i = 0; i < items.length; i++) {
             ShitEntity shitEntity = new ShitEntity();
             shitEntity.setTitle(items[i]);
+            shitEntity.setType(types[i]);
             shitEntities.add(shitEntity);
         }
         Log.d(TAG, "onCreateView: " + shitEntities.toString());
@@ -60,7 +64,7 @@ public class CircleShitFragment extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayoutCircle);
         // 添加 fragment
         FragmentManager fm = getChildFragmentManager();
-        adapter = new ShitPagerAdapter(fm, shitEntities);
+        adapter = new ShitFriendPagerAdapter(fm, shitEntities);
         // 设置 viewPager
         viewPager.setAdapter(adapter);
         // 关联 tabLayout
