@@ -36,9 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:drawableLeft="@mipmap/ic_rss_hot"
             android:gravity="right"
-            android:text="type" />
+            />
     </LinearLayout>
 
 
@@ -55,10 +54,24 @@
             android:text="见学长夫妇，说是最近俩人一直分床睡，已经好几个月了。我还以为是关系冷淡期，关切地问怎么回事。学长含羞一笑，说俩人共同爱好太多，三观太和，永远有聊不完的话题，
             一不小心就唠到三四点，再愉快地啪啪一下，第二天根本没法起床上班...秀得我泪流满面…" />
 
-        <ImageView
-            android:id="@+id/image"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/showPlayIcon"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:src="@mipmap/video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -68,44 +81,29 @@
         android:orientation="horizontal">
 
         <TextView
-            style="@style/shit_item_text_style"
-            android:text="好笑" />
-
-        <TextView
             android:id="@+id/tvLaugh"
             style="@style/shit_item_text_style"
-            android:text="11223" />
-
-        <TextView
-            style="@style/shit_item_text_style"
-            android:text=" · 评论" />
+            android:text="好笑 11223" />
 
         <TextView
             android:id="@+id/tvComment"
             style="@style/shit_item_text_style"
-            android:text="好笑" />
-
-        <TextView
-            style="@style/shit_item_text_style"
-            android:text=" · 分享" />
+            android:text=" · 评论 45" />
 
         <TextView
             android:id="@+id/tvShare"
             style="@style/shit_item_text_style"
-            android:text="7" />
-
+            android:text=" · 分享 7" />
         <TextView
+            android:id="@+id/tvBorn"
             style="@style/shit_item_text_style"
-            android:text=" · 再生" />
-
-        <TextView
-            android:id="@+id/tvBron"
-            style="@style/shit_item_text_style"
-            android:text="7" />
+            android:text=" · 再生 7" />
 
     </LinearLayout>
 
     <RelativeLayout
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -116,13 +114,14 @@
 
         <ImageButton
             android:id="@+id/ivUnsupport"
-
+            android:layout_marginLeft="40dp"
             style="@style/shit_item_imageButton_style"
             android:layout_toRightOf="@id/ivSupport"
             android:src="@drawable/shit_item_image_unsupport" />
 
         <ImageButton
             android:id="@+id/ivComments"
+            android:layout_marginLeft="40dp"
             style="@style/shit_item_imageButton_style"
             android:layout_toRightOf="@id/ivUnsupport"
             android:src="@drawable/shit_item_image_comments" />
