@@ -1,6 +1,7 @@
 package com.edu.android_shitproject.adpters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 public class ShitItemAdapter extends BaseAdapter {
 
-    private static final String TAG = "ItemAdapter";
+    private static final String TAG = "ShitItemAdapter";
     private Context context;
     private List<ShitItem.ItemsEntity> items;
 
@@ -68,13 +69,16 @@ public class ShitItemAdapter extends BaseAdapter {
                     .into(holder.tvIcon);
         } else {
             holder.tvName.setText("匿名用户");
-            holder.tvIcon.setImageResource(R.mipmap.ic_launcher);
+            Picasso.with(context)
+                    .load(R.mipmap.tuotuo_avatar)
+                    .transform(new CircleTransformation())
+                    .into(holder.tvIcon);
         }
 
         if (item.getImage() == null) {
-            holder.image.setVisibility(View.GONE);
+            holder.imageView.setVisibility(View.GONE);
         } else {
-            holder.image.setVisibility(View.VISIBLE);
+            holder.imageView.setVisibility(View.VISIBLE);
             // resize(宽,高) 不可以为负数，不可以全为0 一个为0 另一个不为0  为0 的失效
             // fit() 可以匹配 imageView 在 listView 中不好用
             // centerInside() 居中适应大小
@@ -84,15 +88,56 @@ public class ShitItemAdapter extends BaseAdapter {
                     .resize(parent.getWidth(), 0)
                     .placeholder(R.mipmap.ic_launcher) // 下载中的图片 占位图片
                     .error(R.mipmap.ic_launcher) // 下载失败的图片
-                    .into(holder.image);
+                    .into(holder.imageView);
+        }
+
+        // 设置 热门 还是 新鲜
+        if (!"".equals(item.getType()) && item.getType() != null && !"null".equals(item.getType())) {
+            Log.d(TAG, "getView: " + item.getType());
+            if (item.getType().equals("hot")) {
+                holder.type.setText("热门");
+                Drawable drawable = context.getResources().getDrawable(R.mipmap.ic_rss_hot);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder.type.setCompoundDrawables(drawable, null, null, null);
+            } else if (item.getType().equals("fresh")) {
+                holder.type.setText("新鲜");
+                Drawable drawable = context.getResources().getDrawable(R.mipmap.im_ic_read);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder.type.setCompoundDrawables(drawable, null, null, null);
+            }
+        } else {
+            holder.type.setText("");
+            holder.type.setCompoundDrawables(null, null, null, null);
+        }
+
+        // 是视频 显示 视频照片 和 播放按钮
+        if (item.getFormat().equals("video")) {
+            long times = item.getLoop();
+            if (times > 10000) {
+                times = times / 10000;
+                holder.tvBorn.setText(" · 再生 " + Long.toString(times) + "万");
+            } else {
+                holder.tvBorn.setText(" · 再生 " + Long.toString(times));
+            }
+            holder.imageView.setVisibility(View.VISIBLE);
+            Picasso.with(context).load(item.getPic_url()).into(holder.imageView);
+            Log.d(TAG, "getView: " + item.getPic_url());
+            holder.showPlayIcon.setVisibility(View.VISIBLE);
+
+        } else {
+            holder.tvBorn.setText("");
+            holder.showPlayIcon.setVisibility(View.GONE);
         }
         holder.content.setText(item.getContent());
+        holder.tvLaugh.setText("好笑 " + "12");
+        holder.tvComment.setText(" · 评论 " + Integer.toString(item.getComments_count()));
+        holder.tvShare.setText(" · 分享 " + Integer.toString(item.getShare_count()));
         return convertView;
     }
 
-    public void addAll(Collection<? extends ShitItem.ItemsEntity> collection){
+    public void addAll(Collection<? extends ShitItem.ItemsEntity> collection) {
         items.addAll(collection);
-        Log.d(TAG, "addAll: "+items);
+        Log.d(TAG, "addAll: " + items);
         notifyDataSetChanged();
     }
 
@@ -101,13 +146,30 @@ public class ShitItemAdapter extends BaseAdapter {
         private final TextView tvName;
         private final ImageView tvIcon;
         private final TextView content;
-        private final ImageView image;
+        private final ImageView imageView;
+        private final TextView type;
+        private final ImageView showPlayIcon;
+
+        //------laugh
+        private final TextView tvLaugh;
+        private final TextView tvComment;
+        private final TextView tvShare;
+        private final TextView tvBorn;
+
 
         public ViewHolder(View itemView) {
             tvName = (TextView) itemView.findViewById(R.id.user_name);
             tvIcon = (ImageView) itemView.findViewById(R.id.user_icon);
             content = (TextView) itemView.findViewById(R.id.content);
-            image = (ImageView) itemView.findViewById(R.id.image);
+            imageView = (ImageView) itemView.findViewById(R.id.imageView);
+            showPlayIcon = (ImageView) itemView.findViewById(R.id.showPlayIcon);
+
+            type = (TextView) itemView.findViewById(R.id.type);
+            tvLaugh = (TextView) itemView.findViewById(R.id.tvLaugh);
+            tvComment = (TextView) itemView.findViewById(R.id.tvComment);
+            tvShare = (TextView) itemView.findViewById(R.id.tvShare);
+            tvBorn = (TextView) itemView.findViewById(R.id.tvBorn);
+
         }
     }
 }
