@@ -4,9 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.edu.android_shitproject.R;
@@ -28,6 +30,7 @@ public class ShitItemCommentsFragment extends Fragment implements Callback<ShitC
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM = "userId";
+    private static final String TAG = "ShitItemComments";
 
     private MyListView myListView;
 
@@ -78,6 +81,7 @@ public class ShitItemCommentsFragment extends Fragment implements Callback<ShitC
 
     @Override
     public void onResponse(Response<ShitCommentsEntity> response, Retrofit retrofit) {
+        Log.d(TAG, "onResponse: "+response.body().getItems());
         adapter.addAll(response.body().getItems());
     }
     @Override

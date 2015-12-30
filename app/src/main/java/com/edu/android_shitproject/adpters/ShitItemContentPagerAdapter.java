@@ -41,6 +41,7 @@ public class ShitItemContentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+        Log.d(TAG, "getPageTitle() returned: " + commentEntities.get(position).getTitle());
         return commentEntities.get(position).getTitle();
     }
 }

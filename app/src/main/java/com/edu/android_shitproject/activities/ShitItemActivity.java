@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -57,7 +58,6 @@ public class ShitItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_shit);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
     }
@@ -167,10 +167,23 @@ public class ShitItemActivity extends AppCompatActivity {
             commentEntity.setUserId(Integer.toString(item.getId()));
             commentEntities.add(commentEntity);
         }
+
         FragmentManager fm = getSupportFragmentManager();
         adapter = new ShitItemContentPagerAdapter(fm,commentEntities);
         viewPagerShit.setAdapter(adapter);
         tabLayoutShit.setupWithViewPager(viewPagerShit);
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch ( itemId) {
+            // 返回键的点击
+            case android.R.id.home:
+                this.finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

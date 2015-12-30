@@ -1,6 +1,7 @@
 package com.edu.android_shitproject.adpters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.util.List;
  */
 public class ShitItemContentAdapter extends BaseAdapter {
 
+    private static final String TAG = "ShitItemContentAdapter";
     private Context context;
     private List<ShitCommentsEntity.ItemsEntity> items;
 
@@ -55,15 +57,13 @@ public class ShitItemContentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.shit_item_coments, parent, false);
             convertView.setTag(new ViewHolder(convertView));
         }
-
         ShitCommentsEntity.ItemsEntity item = items.get(position);
         ViewHolder holder = (ViewHolder) convertView.getTag();
-
+        Log.d(TAG, "getView: "+item.getUser().getLogin());
         holder.tvUserName.setText(item.getUser().getLogin());
         Picasso.with(context)
                 .load(ShitGetURL.getIconURL(item.getUser().getId(), item.getUser().getIcon()))

@@ -1,168 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context=".activities.ShitItemActivity">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/lineaHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/user_item_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="5dp"
-            android:src="@mipmap/tuotuo_avatar" />
-
-        <TextView
-            android:id="@+id/user_item_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:text="用户名"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/item_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:gravity="right" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lineaBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lineaHeader"
-        android:layout_marginTop="4dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/item_content"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="见学长夫妇，说是最近俩人一直分床睡，已经好几个月了。我还以为是关系冷淡期，关切地问怎么回事。学长含羞一笑，说俩人共同爱好太多，三观太和，永远有聊不完的话题，
-            一不小心就唠到三四点，再愉快地啪啪一下，第二天根本没法起床上班...秀得我泪流满面…"
-            android:textSize="20sp" />
+            android:layout_height="match_parent">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/item_imageView"
+            <LinearLayout
+                android:id="@+id/lineaHeader"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <ImageButton
-                android:id="@+id/item_showPlayIcon"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:background="@null"
-                android:src="@mipmap/video_play"
-                android:visibility="gone" />
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
 
-        </FrameLayout>
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/user_item_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/tuotuo_avatar" />
 
-    <LinearLayout
-        android:id="@+id/linearComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lineaBody"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/user_item_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="用户名"
+                    android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/item_tvLaugh"
-            style="@style/shit_item_text_style"
-            android:text="好笑 11223" />
+                <TextView
+                    android:id="@+id/item_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:gravity="right" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/item_tvComment"
-            style="@style/shit_item_text_style"
-            android:text=" · 评论 45" />
+            <LinearLayout
+                android:id="@+id/lineaBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lineaHeader"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item_tvShare"
-            style="@style/shit_item_text_style"
-            android:text=" · 分享 7" />
+                <TextView
+                    android:id="@+id/item_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="见学长夫妇，说是最近俩人一直分床睡，已经好几个月了。我还以为是关系冷淡期，关切地问怎么回事。学长含羞一笑，说俩人共同爱好太多，三观太和，永远有聊不完的话题，
+            一不小心就唠到三四点，再愉快地啪啪一下，第二天根本没法起床上班...秀得我泪流满面…"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/item_tvBorn"
-            style="@style/shit_item_text_style"
-            android:text=" · 再生 7" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/item_imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:id="@+id/linearFooter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearComment"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+                    <ImageButton
+                        android:id="@+id/item_showPlayIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:background="@null"
+                        android:src="@mipmap/video_play"
+                        android:visibility="gone" />
 
-        <ImageButton
-            android:id="@+id/item_ivSupport"
-            style="@style/shit_item_imageButton_style"
-            android:src="@drawable/shit_item_image_support" />
+                </FrameLayout>
+            </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/item_ivUnsupport"
-            style="@style/shit_item_imageButton_style"
-            android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/item_ivSupport"
-            android:src="@drawable/shit_item_image_unsupport" />
+            <LinearLayout
+                android:id="@+id/linearComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lineaBody"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/item_ivMore"
-            style="@style/shit_item_imageButton_style"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/shit_item_image_more" />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/item_tvLaugh"
+                    style="@style/shit_item_text_style"
+                    android:text="好笑 11223" />
 
-    <LinearLayout
-        android:id="@+id/linearViewPager"
-        android:layout_below="@id/linearFooter"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.design.widget.TabLayout
-            android:id="@+id/item_tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabBackground="@android:color/white"
-            app:tabIndicatorColor="#FFB900"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="#FFB900"
-            app:tabTextColor="#000" />
+                <TextView
+                    android:id="@+id/item_tvComment"
+                    style="@style/shit_item_text_style"
+                    android:text=" · 评论 45" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/item_viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/item_tvShare"
+                    style="@style/shit_item_text_style"
+                    android:text=" · 分享 7" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/item_tvBorn"
+                    style="@style/shit_item_text_style"
+                    android:text=" · 再生 7" />
 
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/linearFooter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearComment"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <ImageButton
+                    android:id="@+id/item_ivSupport"
+                    style="@style/shit_item_imageButton_style"
+                    android:src="@drawable/shit_item_image_support" />
+
+                <ImageButton
+                    android:id="@+id/item_ivUnsupport"
+                    style="@style/shit_item_imageButton_style"
+                    android:layout_marginLeft="40dp"
+                    android:layout_toRightOf="@id/item_ivSupport"
+                    android:src="@drawable/shit_item_image_unsupport" />
+
+                <ImageButton
+                    android:id="@+id/item_ivMore"
+                    style="@style/shit_item_imageButton_style"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/shit_item_image_more" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearFooter"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/item_tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/darker_gray"
+                    app:tabIndicatorColor="#FFB900"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="#FFB900"
+                    app:tabTextColor="#000" />
+
+                <com.edu.android_shitproject.widgets.MyViewPager
+                    android:id="@+id/item_viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/ly_self_comment"
@@ -183,10 +190,10 @@
             android:src="@mipmap/im_ic_send_emotion" />
 
         <EditText
-            android:layout_gravity="center_vertical"
             android:id="@+id/item_comment_msg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center_vertical"
@@ -207,20 +214,4 @@
 
     </LinearLayout>
 
-
-
-<!--
-    <ListView
-        android:id="@+id/id_comments"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/ly_self_comment"
-        android:layout_below="@id/linearFooter"
-        android:cacheColorHint="#0000"
-        android:divider="@null"
-        android:dividerHeight="5dp"
-        android:scrollbarStyle="outsideOverlay" />-->
-
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

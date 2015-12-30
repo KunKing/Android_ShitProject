@@ -3,9 +3,11 @@ package com.edu.android_shitproject.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,10 +23,11 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class ShitItemFragment extends Fragment implements Callback<ShitItemEntity>, View.OnClickListener {
+public class ShitItemFragment extends Fragment implements Callback<ShitItemEntity>, View.OnClickListener, AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM = "type";
+    private static final String TAG = "ShitItemFragment";
 
     private ListView listView;
     private ShitItemAdapter adapter;
@@ -62,6 +65,8 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
          adapter = new ShitItemAdapter(getContext());
          adapter.setOnClickListener(this);
          listView.setAdapter(adapter);
+         // 设置 listView 的 监听事件
+         listView.setOnItemClickListener(this);
          Retrofit build = new Retrofit.Builder()
                  .baseUrl("http://m2.qiushibaike.com")
                  .addConverterFactory(GsonConverterFactory.create())
@@ -106,4 +111,23 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
         }
 
     }
+
+    /**
+     * 选中事件 处理 点击事件
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "onItemSelected: "+id+"-***************-"+adapter.getItem(position));
+        ShitItemEntity.ItemsEntity item = (ShitItemEntity.ItemsEntity) adapter.getItem(position);
+        Intent intent = new Intent(getContext(),ShitItemActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("item", item);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 }
