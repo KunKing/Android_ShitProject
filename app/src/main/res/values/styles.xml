@@ -10,13 +10,21 @@
 
 
     <!-- 自定义主题  -->
-
     <style name="CustomActionBar" parent="AppTheme">
         <item name="colorPrimary">#FFB900</item>
+        <!-- 主体的背景色-->
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowAnimationStyle">@style/winAnimation</item>
     </style>
 
+    <style name="winAnimation">
+        <item name="android:activityOpenEnterAnimation">@anim/view_open_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/view_open_out</item>
+    </style>
+
+
     <style name="shit_item_text_style">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#B7B7B7</item>

@@ -49,6 +49,7 @@
 
         <TextView
             android:id="@+id/content"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="见学长夫妇，说是最近俩人一直分床睡，已经好几个月了。我还以为是关系冷淡期，关切地问怎么回事。学长含羞一笑，说俩人共同爱好太多，三观太和，永远有聊不完的话题，
@@ -61,7 +62,8 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <ImageView
+            <ImageButton
+                android:background="@null"
                 android:id="@+id/showPlayIcon"
                 android:visibility="gone"
                 android:layout_gravity="center_vertical|center_horizontal"
@@ -127,6 +129,7 @@
             android:src="@drawable/shit_item_image_comments" />
 
         <ImageButton
+            android:id="@+id/ivMore"
             style="@style/shit_item_imageButton_style"
             android:layout_alignParentRight="true"
             android:src="@drawable/shit_item_image_more" />
