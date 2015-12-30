@@ -7,11 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.edu.android_shitproject.R;
-import com.edu.android_shitproject.entity.ShitItem;
+import com.edu.android_shitproject.entity.ShitItemEntity;
 import com.edu.android_shitproject.tools.CircleTransformation;
 import com.edu.android_shitproject.tools.ShitGetURL;
 import com.squareup.picasso.Picasso;
@@ -27,11 +28,17 @@ public class ShitItemAdapter extends BaseAdapter {
 
     private static final String TAG = "ShitItemAdapter";
     private Context context;
-    private List<ShitItem.ItemsEntity> items;
+    private List<ShitItemEntity.ItemsEntity> items;
+    // 评论的监听事件
+    private View.OnClickListener onClickListener;
 
     public ShitItemAdapter(Context context) {
         this.context = context;
         items = new ArrayList<>();
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -59,7 +66,7 @@ public class ShitItemAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.shit_item, parent, false);
             convertView.setTag(new ViewHolder(convertView));
         }
-        ShitItem.ItemsEntity item = items.get(position);
+        ShitItemEntity.ItemsEntity item = items.get(position);
         ViewHolder holder = (ViewHolder) convertView.getTag();
         if (item.getUser() != null) {
             holder.tvName.setText(item.getUser().getLogin());
@@ -79,10 +86,7 @@ public class ShitItemAdapter extends BaseAdapter {
             holder.imageView.setVisibility(View.GONE);
         } else {
             holder.imageView.setVisibility(View.VISIBLE);
-            // resize(宽,高) 不可以为负数，不可以全为0 一个为0 另一个不为0  为0 的失效
-            // fit() 可以匹配 imageView 在 listView 中不好用
-            // centerInside() 居中适应大小
-            // centerCrop() 剪切
+
             Picasso.with(context)
                     .load(ShitGetURL.getImageURL((String) item.getImage()))
                     .resize(parent.getWidth(), 0)
@@ -132,23 +136,26 @@ public class ShitItemAdapter extends BaseAdapter {
         holder.tvLaugh.setText("好笑 " + "12");
         holder.tvComment.setText(" · 评论 " + Integer.toString(item.getComments_count()));
         holder.tvShare.setText(" · 分享 " + Integer.toString(item.getShare_count()));
+        holder.ivComments.setTag(position);
+        holder.ivMore.setTag(position);
+
         return convertView;
     }
 
-    public void addAll(Collection<? extends ShitItem.ItemsEntity> collection) {
+    public void addAll(Collection<? extends ShitItemEntity.ItemsEntity> collection) {
         items.addAll(collection);
         Log.d(TAG, "addAll: " + items);
         notifyDataSetChanged();
     }
 
-    private static class ViewHolder {
+    private class ViewHolder {
 
         private final TextView tvName;
         private final ImageView tvIcon;
         private final TextView content;
         private final ImageView imageView;
         private final TextView type;
-        private final ImageView showPlayIcon;
+        private final ImageButton showPlayIcon;
 
         //------laugh
         private final TextView tvLaugh;
@@ -156,13 +163,17 @@ public class ShitItemAdapter extends BaseAdapter {
         private final TextView tvShare;
         private final TextView tvBorn;
 
+        //----- btn comment
+        private final ImageButton ivComments;
+        private final ImageButton ivMore;
+
 
         public ViewHolder(View itemView) {
             tvName = (TextView) itemView.findViewById(R.id.user_name);
             tvIcon = (ImageView) itemView.findViewById(R.id.user_icon);
             content = (TextView) itemView.findViewById(R.id.content);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
-            showPlayIcon = (ImageView) itemView.findViewById(R.id.showPlayIcon);
+            showPlayIcon = (ImageButton) itemView.findViewById(R.id.showPlayIcon);
 
             type = (TextView) itemView.findViewById(R.id.type);
             tvLaugh = (TextView) itemView.findViewById(R.id.tvLaugh);
@@ -170,6 +181,9 @@ public class ShitItemAdapter extends BaseAdapter {
             tvShare = (TextView) itemView.findViewById(R.id.tvShare);
             tvBorn = (TextView) itemView.findViewById(R.id.tvBorn);
 
+            ivComments = (ImageButton) itemView.findViewById(R.id.ivComments);
+            ivMore = (ImageButton) itemView.findViewById(R.id.ivMore);
+            ivComments.setOnClickListener(onClickListener);
         }
     }
 }

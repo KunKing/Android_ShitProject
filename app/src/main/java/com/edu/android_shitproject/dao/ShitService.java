@@ -1,6 +1,6 @@
 package com.edu.android_shitproject.dao;
 
-import com.edu.android_shitproject.entity.ShitItem;
+import com.edu.android_shitproject.entity.ShitItemEntity;
 
 import retrofit.Call;
 import retrofit.http.GET;
@@ -18,7 +18,6 @@ public interface ShitService {
      * @return
      */
     @GET("article/list/{type}")
-    Call<ShitItem> getList(@Path("type") String type, @Query("page") int page);
-
+    Call<ShitItemEntity> getList(@Path("type") String type, @Query("page") int page);
 
 }

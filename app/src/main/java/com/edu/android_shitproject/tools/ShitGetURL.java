@@ -28,4 +28,9 @@ public class ShitGetURL {
         // TODO: 2015/12/29 检测网络  工具类 返回师傅是 wifi  medium 或者 3g small
         return String.format(url, matcher.group(1), matcher.group(), "small", image);
     }
+
+    public static String getCommentURL(long id){
+        String url = "http://m2.qiushibaike.com/article/%d/comments?page=2";
+        return String.format(url,id);
+    }
 }

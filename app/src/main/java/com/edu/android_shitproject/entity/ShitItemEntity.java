@@ -2,13 +2,13 @@ package com.edu.android_shitproject.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Ming on 2015/12/29.
  */
-public class ShitItem {
-
+public class ShitItemEntity {
 
     @SerializedName("count")
     private int count;
@@ -73,7 +73,7 @@ public class ShitItem {
     }
 
     // items
-    public static class ItemsEntity {
+    public static class ItemsEntity implements Serializable{
 
         @SerializedName("high_url")
         private String high_url;
@@ -281,7 +281,7 @@ public class ShitItem {
             return type;
         }
 
-        public static class UserEntity {
+        public static class UserEntity implements Serializable{
             @SerializedName("avatar_updated_at")
             private int avatar_updated_at;
             @SerializedName("last_visited_at")
@@ -303,8 +303,6 @@ public class ShitItem {
             private int id;
             @SerializedName("icon")
             private String icon;
-
-
 
             public void setAvatar_updated_at(int avatar_updated_at) {
                 this.avatar_updated_at = avatar_updated_at;
@@ -387,7 +385,7 @@ public class ShitItem {
             }
         }
 
-        public static class VotesEntity {
+        public static class VotesEntity implements Serializable {
             @SerializedName("down")
             private int down;
             @SerializedName("up")
