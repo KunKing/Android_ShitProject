@@ -167,7 +167,7 @@
 
                 <com.edu.android_shitproject.widgets.MyViewPager
                     android:id="@+id/item_viewPager"
-                    android:background="#f5f5f5"
+                    android:background="#f9f9f9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

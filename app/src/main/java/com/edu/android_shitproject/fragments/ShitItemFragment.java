@@ -17,6 +17,7 @@ import com.edu.android_shitproject.R;
 import com.edu.android_shitproject.activities.ShitItemActivity;
 import com.edu.android_shitproject.adpters.ShitItemAdapter;
 import com.edu.android_shitproject.dao.ShitService;
+import com.edu.android_shitproject.entity.ImageBtnFlag;
 import com.edu.android_shitproject.entity.ShitItemEntity;
 import com.edu.android_shitproject.tools.HttpUtils;
 
@@ -64,34 +65,32 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
         return inflater.inflate(R.layout.fragment_shit_item, container, false);
     }
 
-     @Override
-     public void onViewCreated(View view, Bundle savedInstanceState) {
-         type = getArguments().getString(ARG_PARAM);
-         listView = (ListView) view.findViewById(R.id.shitListView);
-         adapter = new ShitItemAdapter(getContext());
-         adapter.setOnClickListener(this);
-         listView.setAdapter(adapter);
-         page = 1;
-
-         //------------------------- 下拉刷新
-         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-         // 设置图标的性状
-         refreshLayout.setSize(SwipeRefreshLayout.LARGE);
-         refreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
-         refreshLayout.setOnRefreshListener(this);
-         //---------
-
-         // 设置 listView 的 监听事件
-         listView.setOnItemClickListener(this);
-         call = HttpUtils.getService().getList(type,page);
-         call.enqueue(this);
-         super.onViewCreated(view, savedInstanceState);
-     }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        type = getArguments().getString(ARG_PARAM);
+        listView = (ListView) view.findViewById(R.id.shitListView);
+        adapter = new ShitItemAdapter(getContext());
+        adapter.setOnClickListener(this);
+        listView.setAdapter(adapter);
+        page = 1;
+        //------------------------- 下拉刷新
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        // 设置图标的性状
+        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
+        refreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
+        refreshLayout.setOnRefreshListener(this);
+        //---------
+        // 设置 listView 的 监听事件
+        listView.setOnItemClickListener(this);
+        call = HttpUtils.getService().getList(type, page);
+        call.enqueue(this);
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Override
     public void onResponse(Response<ShitItemEntity> response, Retrofit retrofit) {
         // 清空数据 需要判断 上拉加载还是下拉刷新 用page 判断
-        if (page==1){
+        if (page == 1) {
             adapter.clear();
         }
         adapter.addAll(response.body().getItems());
@@ -119,7 +118,7 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
             case R.id.ivComments:
                 if (position > -1) {
                     ShitItemEntity.ItemsEntity item = (ShitItemEntity.ItemsEntity) adapter.getItem(position);
-                    Intent intent = new Intent(getContext(),ShitItemActivity.class);
+                    Intent intent = new Intent(getContext(), ShitItemActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("item", item);
                     intent.putExtras(bundle);
@@ -127,11 +126,11 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
                 }
                 break;
         }
-
     }
 
     /**
      * 选中事件 处理 点击事件
+     *
      * @param parent
      * @param view
      * @param position
@@ -139,9 +138,9 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, "onItemSelected: "+id+"-***************-"+adapter.getItem(position));
+        Log.d(TAG, "onItemSelected: " + id + "-***************-" + adapter.getItem(position));
         ShitItemEntity.ItemsEntity item = (ShitItemEntity.ItemsEntity) adapter.getItem(position);
-        Intent intent = new Intent(getContext(),ShitItemActivity.class);
+        Intent intent = new Intent(getContext(), ShitItemActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("item", item);
         intent.putExtras(bundle);
@@ -150,10 +149,10 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
 
     @Override
     public void onRefresh() {
-            // TODO: 2015/12/31  进行下拉刷新 取第一页的数据 得清空数据
-            page = 1;
-            // 一般放在成功拿到数据之后 这边是测试
-            // adapter.clear();
-            HttpUtils.getService().getList(type,page).enqueue(this);
+        // TODO: 2015/12/31  进行下拉刷新 取第一页的数据 得清空数据
+        page = 1;
+        // 一般放在成功拿到数据之后 这边是测试
+        // adapter.clear();
+        HttpUtils.getService().getList(type, page).enqueue(this);
     }
 }

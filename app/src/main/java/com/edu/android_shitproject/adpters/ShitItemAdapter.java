@@ -67,7 +67,7 @@ public class ShitItemAdapter extends BaseAdapter {
             convertView.setTag(new ViewHolder(convertView));
         }
         ShitItemEntity.ItemsEntity item = items.get(position);
-        ViewHolder holder = (ViewHolder) convertView.getTag();
+        final ViewHolder holder = (ViewHolder) convertView.getTag();
         if (item.getUser() != null) {
             holder.tvName.setText(item.getUser().getLogin());
             Picasso.with(context)
@@ -137,7 +137,22 @@ public class ShitItemAdapter extends BaseAdapter {
         holder.tvComment.setText(" · 评论 " + Integer.toString(item.getComments_count()));
         holder.tvShare.setText(" · 分享 " + Integer.toString(item.getShare_count()));
         holder.ivComments.setTag(position);
-        holder.ivMore.setTag(position);
+        holder.ivSupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: 支持");
+                holder.ivSupport.setImageResource(R.mipmap.operation_support_press);
+                holder.ivUnsupport.setImageResource(R.mipmap.operation_unsupport);
+            }
+        });
+        holder.ivUnsupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: 不支持" );
+                holder.ivSupport.setImageResource(R.mipmap.operation_support);
+                holder.ivUnsupport.setImageResource(R.mipmap.operation_unsupport_press);
+            }
+        });
 
         return convertView;
     }
@@ -149,7 +164,7 @@ public class ShitItemAdapter extends BaseAdapter {
     }
 
     // ------------------刷新的方法
-    public void clear(){
+    public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
@@ -172,6 +187,8 @@ public class ShitItemAdapter extends BaseAdapter {
         //----- btn comment
         private final ImageButton ivComments;
         private final ImageButton ivMore;
+        private final ImageButton ivSupport;
+        private final ImageButton ivUnsupport;
 
 
         public ViewHolder(View itemView) {
@@ -189,6 +206,8 @@ public class ShitItemAdapter extends BaseAdapter {
 
             ivComments = (ImageButton) itemView.findViewById(R.id.ivComments);
             ivMore = (ImageButton) itemView.findViewById(R.id.ivMore);
+            ivSupport = (ImageButton) itemView.findViewById(R.id.ivSupport);
+            ivUnsupport = (ImageButton) itemView.findViewById(R.id.ivUnsupport);
             ivComments.setOnClickListener(onClickListener);
         }
     }

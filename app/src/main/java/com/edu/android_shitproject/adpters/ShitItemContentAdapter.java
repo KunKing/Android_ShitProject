@@ -6,18 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.edu.android_shitproject.R;
-import com.edu.android_shitproject.entity.CommentEntity;
 import com.edu.android_shitproject.entity.ShitCommentsEntity;
-import com.edu.android_shitproject.entity.ShitItemEntity;
 import com.edu.android_shitproject.tools.CircleTransformation;
+import com.edu.android_shitproject.tools.RelativeDateFormat;
 import com.edu.android_shitproject.tools.ShitGetURL;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -63,14 +62,18 @@ public class ShitItemContentAdapter extends BaseAdapter {
         }
         ShitCommentsEntity.ItemsEntity item = items.get(position);
         ViewHolder holder = (ViewHolder) convertView.getTag();
-        Log.d(TAG, "getView: "+item.getUser().getLogin());
+        Log.d(TAG, "getView: " + item.getUser().getLogin());
         holder.tvUserName.setText(item.getUser().getLogin());
         Picasso.with(context)
                 .load(ShitGetURL.getIconURL(item.getUser().getId(), item.getUser().getIcon()))
                 .transform(new CircleTransformation())
                 .into(holder.tvUserIcon);
         holder.tvContent.setText(item.getContent());
-        holder.tvTime.setText(Integer.toString(item.getCreated_at()));
+        try {
+            holder.tvTime.setText(RelativeDateFormat.getTime(item.getCreated_at()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.tvReplayCount.setText("2");
         holder.tvLikeCount.setText(Integer.toString(item.getLike_count()));
         return convertView;

@@ -29,8 +29,4 @@ public class ShitGetURL {
         return String.format(url, matcher.group(1), matcher.group(), "small", image);
     }
 
-    public static String getCommentURL(long id){
-        String url = "http://m2.qiushibaike.com/article/%d/comments?page=1";
-        return String.format(url,id);
-    }
 }
