@@ -6,7 +6,7 @@
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/theme"
         android:supportsRtl="true"
         android:theme="@style/CustomActionBar">
         <activity android:name=".MainActivity" />

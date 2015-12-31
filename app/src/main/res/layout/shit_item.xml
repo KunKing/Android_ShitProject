@@ -133,7 +133,9 @@
             android:id="@+id/ivMore"
             style="@style/shit_item_imageButton_style"
             android:layout_alignParentRight="true"
-            android:src="@drawable/shit_item_image_more" />
+            android:src="@drawable/shit_item_image_more"
+            android:layout_marginRight="10dp"
+            />
     </RelativeLayout>
 
 </LinearLayout>
