@@ -1,8 +1,10 @@
 package com.edu.android_shitproject.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,8 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
     private ListView listView;
     private ShitItemAdapter adapter;
     private Call<ShitItemEntity> call;
+    private SwipeRefreshLayout refreshLayout;
+    private int page;
 
     public ShitItemFragment() {
         // Required empty public constructor
@@ -65,6 +69,24 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
          adapter = new ShitItemAdapter(getContext());
          adapter.setOnClickListener(this);
          listView.setAdapter(adapter);
+         page = 1;
+
+         //------------------------- 下拉刷新
+         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+         // 设置图标的性状
+         refreshLayout.setSize(SwipeRefreshLayout.LARGE);
+         refreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
+         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+             @Override
+             public void onRefresh() {
+                 // TODO: 2015/12/31  进行下拉刷新 取第一页的数据 得清空数据
+                 page = 1;
+                 // 一般放在成功拿到数据之后 这边是测试
+                 // adapter.clear();
+             }
+         });
+         //---------
+
          // 设置 listView 的 监听事件
          listView.setOnItemClickListener(this);
          Retrofit build = new Retrofit.Builder()
@@ -72,13 +94,17 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
                  .addConverterFactory(GsonConverterFactory.create())
                  .build();
          ShitService service = build.create(ShitService.class);
-         call = service.getList(type, 1);
+         call = service.getList(type, page);
          call.enqueue(this);
          super.onViewCreated(view, savedInstanceState);
      }
 
     @Override
     public void onResponse(Response<ShitItemEntity> response, Retrofit retrofit) {
+        // 清空数据 需要判断 上拉加载还是下拉刷新 用page 判断
+        if (page==1){
+            adapter.clear();
+        }
         adapter.addAll(response.body().getItems());
     }
 
@@ -86,6 +112,9 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
     public void onFailure(Throwable t) {
         t.printStackTrace();
         Toast.makeText(getContext(), "显示失败", Toast.LENGTH_SHORT).show();
+
+        // 设置是否在刷新状态
+        refreshLayout.setRefreshing(false);
     }
 
     // imageButton click 事件

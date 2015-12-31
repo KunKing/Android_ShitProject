@@ -148,6 +148,12 @@ public class ShitItemAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    // ------------------刷新的方法
+    public void clear(){
+        items.clear();
+        notifyDataSetChanged();
+    }
+
     private class ViewHolder {
 
         private final TextView tvName;

@@ -48,7 +48,7 @@ public class ThemeActivity extends AppCompatActivity implements Runnable {
     @Override
     public void run() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             Intent intent = new Intent(this, MainActivity.class);
             Message msg = handler.obtainMessage();
             msg.obj = intent;
