@@ -1,28 +1,21 @@
 package com.edu.android_shitproject.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.edu.android_shitproject.R;
-import com.edu.android_shitproject.adpters.ShitItemAdapter;
 import com.edu.android_shitproject.adpters.ShitItemContentAdapter;
-import com.edu.android_shitproject.dao.ShitItemService;
-import com.edu.android_shitproject.dao.ShitService;
 import com.edu.android_shitproject.entity.ShitCommentsEntity;
-import com.edu.android_shitproject.entity.ShitItemEntity;
+import com.edu.android_shitproject.tools.HttpUtils;
 import com.edu.android_shitproject.widgets.MyListView;
 
 import retrofit.Call;
 import retrofit.Callback;
-import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -37,6 +30,7 @@ public class ShitItemCommentsFragment extends Fragment implements Callback<ShitC
     private ShitItemContentAdapter adapter;
 
     private Call<ShitCommentsEntity> call;
+    private int page;
 
     public ShitItemCommentsFragment() {
         // Required empty public constructor
@@ -66,15 +60,11 @@ public class ShitItemCommentsFragment extends Fragment implements Callback<ShitC
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         String userId = getArguments().getString(ARG_PARAM);
+        page=1;
         myListView = (MyListView) view.findViewById(R.id.item_comments);
         adapter = new ShitItemContentAdapter(getContext());
         myListView.setAdapter(adapter);
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl("http://m2.qiushibaike.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ShitItemService service = build.create(ShitItemService.class);
-        call = service.getList(userId, 1);
+        call =  HttpUtils.getService().getListItem(userId, page);
         call.enqueue(this);
         super.onViewCreated(view, savedInstanceState);
     }

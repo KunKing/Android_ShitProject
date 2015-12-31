@@ -30,7 +30,7 @@ public class ShitGetURL {
     }
 
     public static String getCommentURL(long id){
-        String url = "http://m2.qiushibaike.com/article/%d/comments?page=2";
+        String url = "http://m2.qiushibaike.com/article/%d/comments?page=1";
         return String.format(url,id);
     }
 }

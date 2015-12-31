@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ShitItemFragment">
 
-    <!--todo v4 包中  第一种方式 下拉刷新 谷歌官方自带-->
+    <!--todo v4 包中  第一种方式 下拉刷新 谷歌官方自带 还需要设置一些属性-->
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -19,6 +19,4 @@
         android:dividerHeight="8dp"
         />
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <!-- todo 第二种方式  -->
 </LinearLayout>

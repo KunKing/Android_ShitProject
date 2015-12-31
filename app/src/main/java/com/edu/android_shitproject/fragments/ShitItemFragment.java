@@ -18,6 +18,7 @@ import com.edu.android_shitproject.activities.ShitItemActivity;
 import com.edu.android_shitproject.adpters.ShitItemAdapter;
 import com.edu.android_shitproject.dao.ShitService;
 import com.edu.android_shitproject.entity.ShitItemEntity;
+import com.edu.android_shitproject.tools.HttpUtils;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -25,7 +26,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class ShitItemFragment extends Fragment implements Callback<ShitItemEntity>, View.OnClickListener, AdapterView.OnItemClickListener {
+public class ShitItemFragment extends Fragment implements Callback<ShitItemEntity>, View.OnClickListener, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM = "type";
@@ -36,6 +37,7 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
     private Call<ShitItemEntity> call;
     private SwipeRefreshLayout refreshLayout;
     private int page;
+    private String type;
 
     public ShitItemFragment() {
         // Required empty public constructor
@@ -64,7 +66,7 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
 
      @Override
      public void onViewCreated(View view, Bundle savedInstanceState) {
-         String type = getArguments().getString(ARG_PARAM);
+         type = getArguments().getString(ARG_PARAM);
          listView = (ListView) view.findViewById(R.id.shitListView);
          adapter = new ShitItemAdapter(getContext());
          adapter.setOnClickListener(this);
@@ -76,25 +78,12 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
          // 设置图标的性状
          refreshLayout.setSize(SwipeRefreshLayout.LARGE);
          refreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
-         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-             @Override
-             public void onRefresh() {
-                 // TODO: 2015/12/31  进行下拉刷新 取第一页的数据 得清空数据
-                 page = 1;
-                 // 一般放在成功拿到数据之后 这边是测试
-                 // adapter.clear();
-             }
-         });
+         refreshLayout.setOnRefreshListener(this);
          //---------
 
          // 设置 listView 的 监听事件
          listView.setOnItemClickListener(this);
-         Retrofit build = new Retrofit.Builder()
-                 .baseUrl("http://m2.qiushibaike.com")
-                 .addConverterFactory(GsonConverterFactory.create())
-                 .build();
-         ShitService service = build.create(ShitService.class);
-         call = service.getList(type, page);
+         call = HttpUtils.getService().getList(type,page);
          call.enqueue(this);
          super.onViewCreated(view, savedInstanceState);
      }
@@ -106,13 +95,13 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
             adapter.clear();
         }
         adapter.addAll(response.body().getItems());
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onFailure(Throwable t) {
         t.printStackTrace();
         Toast.makeText(getContext(), "显示失败", Toast.LENGTH_SHORT).show();
-
         // 设置是否在刷新状态
         refreshLayout.setRefreshing(false);
     }
@@ -159,4 +148,12 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
         startActivity(intent);
     }
 
+    @Override
+    public void onRefresh() {
+            // TODO: 2015/12/31  进行下拉刷新 取第一页的数据 得清空数据
+            page = 1;
+            // 一般放在成功拿到数据之后 这边是测试
+            // adapter.clear();
+            HttpUtils.getService().getList(type,page).enqueue(this);
+    }
 }
