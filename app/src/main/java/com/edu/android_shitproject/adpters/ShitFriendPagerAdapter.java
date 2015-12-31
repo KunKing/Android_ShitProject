@@ -5,8 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.edu.android_shitproject.entity.ShitEntity;
-import com.edu.android_shitproject.fragments.ShitFriendItemFragment;
-import com.edu.android_shitproject.fragments.ShitItemFragment;
+import com.edu.android_shitproject.fragments.ShitFriendsItemFragment;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class ShitFriendPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // 判断传入的 fragment 是哪一个 类型的
-        return ShitFriendItemFragment.newInstance(shitEntities.get(position).getType());
+        return ShitFriendsItemFragment.newInstance(shitEntities.get(position).getType());
     }
 
     @Override
