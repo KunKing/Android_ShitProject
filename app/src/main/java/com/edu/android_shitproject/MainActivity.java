@@ -113,9 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.mineCollect:
                 Toast.makeText(this, "我的收藏", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.mineJoin:
-                Toast.makeText(this, "我的参与", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.systemSetting:
                 Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
                 break;
