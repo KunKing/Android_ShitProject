@@ -11,13 +11,17 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.edu.android_shitproject.R;
 import com.edu.android_shitproject.adpters.ShitItemContentPagerAdapter;
+import com.edu.android_shitproject.dao.LoadDataCallBack;
+import com.edu.android_shitproject.dao.LoadDataCurrentPage;
 import com.edu.android_shitproject.entity.CommentEntity;
 import com.edu.android_shitproject.entity.ShitItemEntity;
 import com.edu.android_shitproject.tools.CircleTransformation;
@@ -27,7 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShitItemActivity extends AppCompatActivity {
+public class ShitItemActivity extends AppCompatActivity implements View.OnTouchListener, LoadDataCallBack {
 
     private static final String TAG = "ShitItemActivity";
 
@@ -53,6 +57,13 @@ public class ShitItemActivity extends AppCompatActivity {
     private String[] items = {"全部","热门"};
     private ShitItemContentPagerAdapter adapter;
     private List<CommentEntity> commentEntities;
+    private ScrollView scrollView;
+
+    // 接口回调  子调用父
+    private LoadDataCurrentPage loadDataCurrentPage;
+    private int total;
+    private int currentPage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +85,8 @@ public class ShitItemActivity extends AppCompatActivity {
         tvShare = (TextView) findViewById(R.id.item_tvShare);
         tvBorn = (TextView) findViewById(R.id.item_tvBorn);
         ivMore = (ImageButton) findViewById(R.id.item_ivMore);
+        scrollView = (ScrollView) findViewById(R.id.scrollViewShit);
+        scrollView.setOnTouchListener(this);
 
         commentEntities = new ArrayList<>();
         tabLayoutShit = (TabLayout) findViewById(R.id.item_tabLayout);
@@ -169,7 +182,7 @@ public class ShitItemActivity extends AppCompatActivity {
         }
 
         FragmentManager fm = getSupportFragmentManager();
-        adapter = new ShitItemContentPagerAdapter(fm,commentEntities);
+        adapter = new ShitItemContentPagerAdapter(fm,commentEntities,this);
         viewPagerShit.setAdapter(adapter);
         tabLayoutShit.setupWithViewPager(viewPagerShit);
     }
@@ -185,5 +198,38 @@ public class ShitItemActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            View view = ((ScrollView) v).getChildAt(0);
+            Log.e(TAG, view.getMeasuredHeight()+"getMeasuredHeight()-->");
+            Log.e(TAG, v.getScrollY()+"getScrollY()------->");
+            Log.e(TAG, v.getHeight()+"getHeight()------->");
+            //v.getHeight()可看見的控件高度
+            //v.getScrollY()在y軸方向的偏移量
+            //整個控件的高度（包括不可見的如ScrollView）
+            if (view.getMeasuredHeight() <= v.getScrollY()+ v.getHeight()) {
+                currentPage =1;
+                currentPage++;
+                // TODO: 2016/1/3 更新数据 这这传值到 fragment 中，去获取数据
+                Log.d(TAG, "onTouch: 进来了 更新数据");
+                // TODO: 2016/1/3 是否可以用接口回调呢？父容器项子容器传递数据
+                if (currentPage <= total){
+                    Log.d(TAG, "onTouch: loadDataCurrentPage" + loadDataCurrentPage);
+                    loadDataCurrentPage.loadDataCurrent(currentPage);
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void loadDataCall(int totalPage,LoadDataCurrentPage currentPage) {
+        Log.d(TAG, "接口回调 loadDataCall: "+totalPage);
+        total = totalPage;
+        loadDataCurrentPage =currentPage;
     }
 }
