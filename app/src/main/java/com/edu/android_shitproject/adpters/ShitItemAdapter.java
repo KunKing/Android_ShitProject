@@ -133,7 +133,7 @@ public class ShitItemAdapter extends BaseAdapter {
             holder.showPlayIcon.setVisibility(View.GONE);
         }
         holder.content.setText(item.getContent());
-        holder.tvLaugh.setText("好笑 " + "12");
+        holder.tvLaugh.setText("好笑 " + Integer.toString(item.getVotes().getUp()+item.getVotes().getDown()));
         holder.tvComment.setText(" · 评论 " + Integer.toString(item.getComments_count()));
         holder.tvShare.setText(" · 分享 " + Integer.toString(item.getShare_count()));
         holder.ivComments.setTag(position);
