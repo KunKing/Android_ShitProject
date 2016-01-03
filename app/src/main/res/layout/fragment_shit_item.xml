@@ -1,22 +1,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".fragments.ShitItemFragment">
 
-    <!--todo v4 包中  第一种方式 下拉刷新 谷歌官方自带 还需要设置一些属性-->
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <!-- TODO: Update blank fragment layout -->
-    <ListView
+    <!-- todo 第二种方式 下拉刷新 和 上啦加载-->
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:background="@android:color/white"
-        android:id="@+id/shitListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/pull_to_refresh_lv"
         android:dividerHeight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ptr:ptrDrawable="@mipmap/xlistview_arrow"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderBackground="#e7e7e7"
+        ptr:ptrHeaderTextColor="#5c5c5c"
+        ptr:ptrShowIndicator="true"
         />
-    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

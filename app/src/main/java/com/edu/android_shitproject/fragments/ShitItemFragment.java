@@ -20,6 +20,8 @@ import com.edu.android_shitproject.dao.ShitService;
 import com.edu.android_shitproject.entity.ImageBtnFlag;
 import com.edu.android_shitproject.entity.ShitItemEntity;
 import com.edu.android_shitproject.tools.HttpUtils;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -27,16 +29,16 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class ShitItemFragment extends Fragment implements Callback<ShitItemEntity>, View.OnClickListener, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ShitItemFragment extends Fragment implements Callback<ShitItemEntity>, View.OnClickListener, AdapterView.OnItemClickListener ,PullToRefreshBase.OnRefreshListener2<ListView>{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM = "type";
     private static final String TAG = "ShitItemFragment";
 
-    private ListView listView;
+    private PullToRefreshListView listView;
     private ShitItemAdapter adapter;
     private Call<ShitItemEntity> call;
-    private SwipeRefreshLayout refreshLayout;
+    private int totalPage;
     private int page;
     private String type;
 
@@ -68,21 +70,18 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         type = getArguments().getString(ARG_PARAM);
-        listView = (ListView) view.findViewById(R.id.shitListView);
+        Log.d(TAG, "onViewCreated: "+type);
+        listView = (PullToRefreshListView) view.findViewById(R.id.pull_to_refresh_lv);
         adapter = new ShitItemAdapter(getContext());
         adapter.setOnClickListener(this);
         listView.setAdapter(adapter);
+        listView.setMode(PullToRefreshBase.Mode.BOTH);
         page = 1;
-        //------------------------- 下拉刷新
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        // 设置图标的性状
-        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
-        refreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
-        refreshLayout.setOnRefreshListener(this);
-        //---------
         // 设置 listView 的 监听事件
         listView.setOnItemClickListener(this);
+        listView.setOnRefreshListener(this);
         call = HttpUtils.getService().getList(type, page);
+
         call.enqueue(this);
         super.onViewCreated(view, savedInstanceState);
     }
@@ -91,10 +90,13 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
     public void onResponse(Response<ShitItemEntity> response, Retrofit retrofit) {
         // 清空数据 需要判断 上拉加载还是下拉刷新 用page 判断
         if (page == 1) {
+            // TODO: 2016/1/3 获取总数据量
+            totalPage = response.body().getTotal()/response.body().getCount();
             adapter.clear();
         }
+        Log.d(TAG, "onResponse: "+ response.body());
         adapter.addAll(response.body().getItems());
-        refreshLayout.setRefreshing(false);
+        listView.onRefreshComplete();
     }
 
     @Override
@@ -102,7 +104,7 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
         t.printStackTrace();
         Toast.makeText(getContext(), "显示失败", Toast.LENGTH_SHORT).show();
         // 设置是否在刷新状态
-        refreshLayout.setRefreshing(false);
+        listView.onRefreshComplete();
     }
 
     // imageButton click 事件
@@ -148,11 +150,31 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
     }
 
     @Override
-    public void onRefresh() {
-        // TODO: 2015/12/31  进行下拉刷新 取第一页的数据 得清空数据
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+        // TODO: 2015/12/31 请求第一页的数据
         page = 1;
-        // 一般放在成功拿到数据之后 这边是测试
-        // adapter.clear();
-        HttpUtils.getService().getList(type, page).enqueue(this);
+        refreshView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                HttpUtils.getService().getList(type, page).enqueue(ShitItemFragment.this);
+            }
+        }, 2000);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+        // TODO: 2015/12/31  请求下一页的数据 需要进行判断 total
+        page++;
+        if(page == totalPage){
+            refreshView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    listView.onRefreshComplete();
+                }
+            }, 2000);
+        }else {
+            HttpUtils.getService().getList(type, page).enqueue(this);
+        }
     }
 }
