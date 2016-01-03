@@ -11,6 +11,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -33,19 +36,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private CommonPagerAdapter adapter;
     private ViewPager viewPager;
 
+    private int currentCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initActionIcon();
+        initActionIcon(R.string.app_name);
         init();
     }
 
-    private void initActionIcon(){
+    private void initActionIcon(int title){
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.mipmap.ic_ab_qiushi);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setTitle(R.string.app_name);
+        actionBar.setTitle(title);
     }
 
     private void init() {
@@ -92,23 +97,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (itemId) {
             case R.id.itemShit:
                 count = 0;
+                currentCount = count;
                 item.setChecked(true);
-                viewPager.setCurrentItem(count,false);
+                viewPager.setCurrentItem(count, false);
+                // 重新创建 menu
+                invalidateOptionsMenu();
                 break;
             case R.id.itemCircle:
                 count = 1;
                 item.setChecked(true);
+                currentCount = count;
                 viewPager.setCurrentItem(count, false);
+                invalidateOptionsMenu();
                 break;
             case R.id.itemSelect:
                 count = 2;
                 item.setChecked(true);
+                currentCount = count;
                 viewPager.setCurrentItem(count, false);
+                invalidateOptionsMenu();
                 break;
             case R.id.itemMessage:
                 count = 3;
                 item.setChecked(true);
+                currentCount = count;
                 viewPager.setCurrentItem(count, false);
+                invalidateOptionsMenu();
                 break;
             case R.id.mineCollect:
                 Toast.makeText(this, "我的收藏", Toast.LENGTH_SHORT).show();
@@ -135,15 +149,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (position){
             case 0:
                 menu.setCheckedItem(R.id.itemShit);
+                currentCount = 0;
+                invalidateOptionsMenu();
                 break;
             case 1:
                 menu.setCheckedItem(R.id.itemCircle);
+                currentCount = 1;
+                invalidateOptionsMenu();
                 break;
             case 2:
                 menu.setCheckedItem(R.id.itemSelect);
+                currentCount = 2;
+                invalidateOptionsMenu();
                 break;
             case 3:
                 menu.setCheckedItem(R.id.itemMessage);
+                currentCount = 3;
+                invalidateOptionsMenu();
                 break;
         }
     }
@@ -151,5 +173,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    // 设置 actionBar menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_shit,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        Log.d(TAG, "当前 的 type 是 "+currentCount);
+        menu.clear();
+        MenuInflater inflater = this.getMenuInflater();
+        switch (currentCount) {
+            case 0:
+                inflater.inflate(R.menu.menu_shit,menu);
+                initActionIcon(R.string.app_name);
+                break;
+            case 1:
+                inflater.inflate(R.menu.menu_circle_shit,menu);
+                initActionIcon(R.string.app_name_circle);
+                break;
+
+            case 2:
+                inflater.inflate(R.menu.menu_select,menu);
+                initActionIcon(R.string.app_name_select);
+                break;
+            case 3:
+                inflater.inflate(R.menu.menu_message,menu);
+                initActionIcon(R.string.app_name_message);
+                break;
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 }

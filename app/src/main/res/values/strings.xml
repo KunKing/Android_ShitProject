@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">糗事百科</string>
+    <string name="app_name_circle">糗友圈</string>
+    <string name="app_name_select">发现</string>
+    <string name="app_name_message">小纸条</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

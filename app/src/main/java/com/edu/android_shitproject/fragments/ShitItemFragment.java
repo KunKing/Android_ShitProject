@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -94,7 +97,7 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
             totalPage = response.body().getTotal()/response.body().getCount();
             adapter.clear();
         }
-        Log.d(TAG, "onResponse: "+ response.body());
+        Log.d(TAG, "onResponse: " + response.body());
         adapter.addAll(response.body().getItems());
         listView.onRefreshComplete();
     }
@@ -177,4 +180,5 @@ public class ShitItemFragment extends Fragment implements Callback<ShitItemEntit
             HttpUtils.getService().getList(type, page).enqueue(this);
         }
     }
+
 }
