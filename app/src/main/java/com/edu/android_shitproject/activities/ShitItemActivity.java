@@ -54,7 +54,7 @@ public class ShitItemActivity extends AppCompatActivity implements View.OnTouchL
     private TabLayout tabLayoutShit;
     private ViewPager viewPagerShit;
 
-    private String[] items = {"全部","热门"};
+    private String[] items = {"全部"};
     private ShitItemContentPagerAdapter adapter;
     private List<CommentEntity> commentEntities;
     private ScrollView scrollView;
