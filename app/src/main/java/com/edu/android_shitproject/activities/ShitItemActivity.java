@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.edu.android_shitproject.R;
 import com.edu.android_shitproject.adpters.ShitItemContentPagerAdapter;
-import com.edu.android_shitproject.dao.LoadDataCallBack;
+import com.edu.android_shitproject.dao.LoadDatasCallBack;
 import com.edu.android_shitproject.dao.LoadDataCurrentPage;
 import com.edu.android_shitproject.entity.CommentEntity;
 import com.edu.android_shitproject.entity.ShitItemEntity;
@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShitItemActivity extends AppCompatActivity implements View.OnTouchListener, LoadDataCallBack {
+public class ShitItemActivity extends AppCompatActivity implements View.OnTouchListener, LoadDatasCallBack {
 
     private static final String TAG = "ShitItemActivity";
 

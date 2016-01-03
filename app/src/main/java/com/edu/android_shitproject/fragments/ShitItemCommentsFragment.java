@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.edu.android_shitproject.R;
 import com.edu.android_shitproject.adpters.ShitItemContentAdapter;
-import com.edu.android_shitproject.dao.LoadDataCallBack;
+import com.edu.android_shitproject.dao.LoadDatasCallBack;
 import com.edu.android_shitproject.dao.LoadDataCurrentPage;
 import com.edu.android_shitproject.entity.ShitCommentsEntity;
 import com.edu.android_shitproject.tools.HttpUtils;
@@ -35,16 +35,16 @@ public class ShitItemCommentsFragment extends Fragment implements Callback<ShitC
     private int page;
     private int totalPage;
     // 接口回调
-    private LoadDataCallBack loadDataCallBack;
+    private LoadDatasCallBack loadDatasCallBack;
     private String userId;
 
     public ShitItemCommentsFragment() {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ShitItemCommentsFragment newInstance(String userId,LoadDataCallBack loadDataCallBack) {
+    public static ShitItemCommentsFragment newInstance(String userId,LoadDatasCallBack loadDatasCallBack) {
         ShitItemCommentsFragment fragment = new ShitItemCommentsFragment();
-        fragment.loadDataCallBack = loadDataCallBack;
+        fragment.loadDatasCallBack = loadDatasCallBack;
         Bundle args = new Bundle();
         args.putString(ARG_PARAM, userId);
         fragment.setArguments(args);
@@ -81,7 +81,7 @@ public class ShitItemCommentsFragment extends Fragment implements Callback<ShitC
         if (page==1){
             Log.d(TAG, "首次  page =1   onResponse: ");
             totalPage = (int)Math.ceil(response.body().getTotal()/response.body().getCount());
-            loadDataCallBack.loadDataCall(totalPage,this);
+            loadDatasCallBack.loadDataCall(totalPage,this);
         }
         adapter.addAll(response.body().getItems());
     }
